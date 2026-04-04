@@ -31,3 +31,71 @@ tombolkeranjangbaru.forEach(function(tombol) {
 
         jumlahPilihanSekarang = 1;
         hargaPerItemSekarang = hargaAngka;
+
+        gambarModal.src = sumberGambar;
+        namaModal.innerText = namaProduk;
+        angkaJumlah.innerText = jumlahPilihanSekarang;
+        hargaTotalModal.innerText = (hargaPerItemSekarang * jumlahPilihanSekarang).toLocaleString('id-ID');
+
+        modalProduk.style.display = 'flex';
+    });
+});
+
+tutupModalProduk.addEventListener('click', function() {
+    modalProduk.style.display = 'none';
+});
+
+btnTambah.addEventListener('click', function() {
+    jumlahPilihanSekarang++;
+    angkaJumlah.innerText = jumlahPilihanSekarang;
+    hargaTotalModal.innerText = (hargaPerItemSekarang * jumlahPilihanSekarang).toLocaleString('id-ID');
+});
+
+btnKurang.addEventListener('click', function() {
+    if (jumlahPilihanSekarang > 1) { 
+        jumlahPilihanSekarang--;
+        angkaJumlah.innerText = jumlahPilihanSekarang;
+        hargaTotalModal.innerText = (hargaPerItemSekarang * jumlahPilihanSekarang).toLocaleString('id-ID');
+    }
+});
+
+const btnMasukKeranjang = document.getElementById('btn-masuk-keranjang');
+const barKeranjangBawah = document.getElementById('bar-keranjang-bawah');
+const barJumlahBarang = document.getElementById('bar-jumlah-barang');
+const barTotalHarga = document.getElementById('bar-total-harga');
+
+btnMasukKeranjang.addEventListener('click', function() {
+    const namaProduk = namaModal.innerText;
+    const harga = hargaPerItemSekarang;
+    const jumlah = jumlahPilihanSekarang;
+    const gambar = gambarModal.src;
+
+    // Cek apakah barang sudah ada di keranjang
+    const indexAda = daftarBelanja.findIndex(item => item.nama === namaProduk);
+
+    if (indexAda > -1) {
+        daftarBelanja[indexAda].jumlah += jumlah;
+    } else {
+        daftarBelanja.push({ nama: namaProduk, harga: harga, jumlah: jumlah, gambar: gambar });
+    }
+
+    // Hitung total catatan utama
+    jumlahitem += jumlah;
+    totalharga += (harga * jumlah);
+
+    // Update tampilan bar bawah
+    barJumlahBarang.innerText = `${jumlahitem} BARANG`;
+    barTotalHarga.innerText = `Rp ${totalharga.toLocaleString('id-ID')}`;
+    barKeranjangBawah.classList.add('bar-bawah-tampil');
+
+    modalProduk.style.display = 'none';
+});
+
+
+const areaScroll = document.querySelector('.grid');
+const cards = document.querySelectorAll('.card');
+
+const aturanCCTV = {
+    root: null,
+    threshold: 0.5 
+};
