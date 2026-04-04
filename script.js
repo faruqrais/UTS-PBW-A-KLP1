@@ -99,3 +99,108 @@ const aturanCCTV = {
     root: null,
     threshold: 0.5 
 };
+
+const pemantau = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('fokus');
+        } else {
+            entry.target.classList.remove('fokus');
+        }
+    });
+}, aturanCCTV);
+
+cards.forEach(card => {
+    pemantau.observe(card);
+});
+
+const btnLogin = document.getElementById('btn-login');
+const modalLogin = document.getElementById('modal-login');
+const btnTutup = document.getElementById('btn-tutup');
+const tempatFrom = document.getElementById('tempat-form');
+
+btnLogin.addEventListener('click', function(e) {
+    e.preventDefault();
+    modalLogin.style.display = 'flex';
+    fetch('login.html')
+    .then(response => {
+        if (!response.ok) throw new Error('Gagal memuat form login');
+        return response.text();
+    })
+    .then(data => {
+        tempatFrom.innerHTML = data;
+        aturTombolTukar();
+    })
+    .catch(error => {
+        tempatFrom.innerHTML = '<p style="text-align: center;"> Gagal memuat form login</p>';
+        
+    });
+
+});
+
+btnTutup.addEventListener('click', function() {
+    modalLogin.style.display = 'none';
+});
+
+window.addEventListener('click', function(e) {
+    if (e.target === modalLogin) {
+        modalLogin.style.display = 'none';
+    }
+});
+function aturTombolTukar() {
+    const fromLogin = document.querySelector('.login-container');
+    const judulLogin = document.querySelector('.login');
+    const fromRegister = document.querySelector('.register');
+    const linkDaftar = document.getElementById('link-daftar');
+    const linkMasuk = document.getElementById('link-masuk');
+
+    if(linkDaftar && linkMasuk) {
+        linkDaftar.addEventListener('click', function(e) {
+            e.preventDefault();
+            fromLogin.style.display = 'none';
+            judulLogin.style.display = 'none';
+            fromRegister.style.display = 'block';
+        });
+
+        linkMasuk.addEventListener('click', function(e) {
+            e.preventDefault();
+            fromRegister.style.display = 'none';
+            fromLogin.style.display = 'block';
+            judulLogin.style.display = 'block';
+        });
+    }
+}
+
+const kapsul = document.querySelector('.slider-aktif');
+
+const tombolMenu = document.querySelectorAll('.nav-menu-item');
+tombolMenu.forEach(function(tombol) {
+    tombol.addEventListener('click', function(e) {
+        e.preventDefault();
+        const lebarTombol = this.offsetWidth;
+        const tinggiTombol = this.offsetHeight;
+        const posisiKiri = this.offsetLeft;
+        const posisiAtas = this.offsetTop;
+
+        kapsul.style.width = lebarTombol + 'px';
+        kapsul.style.height = tinggiTombol + 'px';
+        kapsul.style.left = posisiKiri + 'px';
+        kapsul.style.top = posisiAtas + 'px';
+
+
+        tombolMenu.forEach(function(item) {
+            item.classList.remove('aktif');
+        });
+        this.classList.add('aktif');
+
+        const filterKategori = this.getAttribute('data-filter');
+
+        cards.forEach(card => {
+            if(card.getAttribute('data-kategori') === filterKategori) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+            });
+    });
+});
