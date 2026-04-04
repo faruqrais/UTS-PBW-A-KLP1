@@ -304,3 +304,46 @@ window.ubahJumlahKeranjang = function(index, delta) {
         updateTampilanKeranjang();
     }
 };
+
+// Fungsi Hapus barang
+window.hapusItem = function(index) {
+    const item = daftarBelanja[index];
+    jumlahitem -= item.jumlah;
+    totalharga -= (item.harga * item.jumlah);
+    
+    daftarBelanja.splice(index, 1); // Hapus dari daftar
+    
+    // Jika keranjang kosong, sembunyikan bar bawah & tutup modal
+    if (daftarBelanja.length === 0) {
+        barKeranjangBawah.classList.remove('bar-bawah-tampil');
+        modalKeranjang.style.display = 'none';
+    }
+    
+    barJumlahBarang.innerText = `${jumlahitem} BARANG`;
+    barTotalHarga.innerText = `Rp ${totalharga.toLocaleString('id-ID')}`;
+    updateTampilanKeranjang();
+};
+
+//--- LOGIKA TOGGLE TAKE AWAY ---
+document.addEventListener('click', function(e) {
+    const target = e.target.closest('.tombol-opsi');
+    if (target) {
+        const semuaOpsi = document.querySelectorAll('.tombol-opsi');
+        semuaOpsi.forEach(btn => btn.classList.remove('aktif'));
+        target.classList.add('aktif');
+
+        console.log("ID yang terdeteksi:", target.id);
+
+        if (target.id === 'btn-take-away') {
+            metodepemesanan = "Take Away";
+            biayatambahan = 2000;
+        } else {
+            metodepemesanan = "Dine In";
+            biayatambahan = 0;
+        }   
+
+        console.log("Metode final:", metodepemesanan);
+
+        updateTampilanKeranjang();
+    } 
+});
