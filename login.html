@@ -1,0 +1,20 @@
+<div class="login">Masuk ke akun Anda</div>
+<div class="login-container">
+    <form action="/login" method="POST" class="login-form">
+        <input type="text" name="username" placeholder="Username / email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit" class="btn-utama">Masuk</button>
+    </form>
+    <p>Belum punya akun? <a href="#register.html" id="link-daftar">Daftar di sini</a></p>
+</div>
+<div class="register">
+    <h2>Daftar Akun Baru</h2>
+    <form action="/register" method="POST" class="register-form">
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit" class="btn-utama">Daftar</button>
+    </form>
+    <p style="text-align: center; margin-top: 20px;">Sudah punya akun? <a href="#login.html" id="link-masuk">Masuk di sini</a></p>
+</div>
+</div>
