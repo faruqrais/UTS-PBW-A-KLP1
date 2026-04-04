@@ -204,3 +204,103 @@ tombolMenu.forEach(function(tombol) {
             });
     });
 });
+
+const menuAwal = document.querySelector('.nav-menu-item.aktif');
+if (menuAwal) {
+    kapsul.style.width = menuAwal.offsetWidth + 'px';
+    kapsul.style.height = menuAwal.offsetHeight + 'px';
+    kapsul.style.left = menuAwal.offsetLeft + 'px';
+    kapsul.style.top = menuAwal.offsetTop + 'px';
+
+    menuAwal.click();
+}
+
+// --- FASE 3: LOGIKA KERANJANG BESAR ---
+const modalKeranjang = document.getElementById('modal-keranjang');
+const btnKembali = document.getElementById('btn-kembali');
+const isiKeranjangList = document.getElementById('isi-keranjang-list');
+const jumlahItemAtas = document.getElementById('jumlah-item-atas');
+const subtotalAngka = document.getElementById('subtotal-angka');
+const totalAkhirAngka = document.getElementById('total-akhir-angka');
+
+// 1. Fungsi untuk MEMBUKA keranjang saat Bar Hijau diklik
+barKeranjangBawah.addEventListener('click', function() {
+    modalKeranjang.style.display = 'flex';
+    updateTampilanKeranjang(); // Refresh isi list setiap kali dibuka
+});
+
+// 2. Fungsi untuk MENUTUP keranjang saat tombol panah diklik
+btnKembali.addEventListener('click', function() {
+    modalKeranjang.style.display = 'none';
+});
+
+// 3. Fungsi untuk mengupdate angka-angka di dalam keranjang
+function updateTampilanKeranjang() {
+    // Update tulisan jumlah barang di bagian atas
+    jumlahItemAtas.innerText = `${jumlahitem} BARANG`;
+    
+    // Update angka subtotal dan total (mengambil dari buku catatan 'totalharga')
+    const hargaFormatted = `Rp ${totalharga.toLocaleString('id-ID')}`;
+    subtotalAngka.innerText = hargaFormatted;
+    totalAkhirAngka.innerText = hargaFormatted;
+
+    // Catatan: Untuk Fase 3.1 nanti, kita akan buat fungsi 
+    // agar list itemnya muncul satu per satu sesuai barang yang diklik.
+}
+
+function updateTampilanKeranjang() {
+    jumlahItemAtas.innerText = `${jumlahitem} BARANG`;
+    isiKeranjangList.innerHTML = ''; 
+
+    daftarBelanja.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'item-keranjang';
+        div.innerHTML = `
+            <img src="${item.gambar}" class="img-item">
+            <div class="detail-item">
+                <h4>${item.nama}</h4>
+                <p>Rp ${item.harga.toLocaleString('id-ID')}</p>
+                <div class="kontrol-item">
+                    <button class="btn-kecil" onclick="ubahJumlahKeranjang(${index}, -1)">-</button>
+                    <span>${item.jumlah}</span>
+                    <button class="btn-kecil" onclick="ubahJumlahKeranjang(${index}, 1)">+</button>
+                </div>
+            </div>
+            <div class="harga-item-kanan">
+                <span>Rp ${(item.harga * item.jumlah).toLocaleString('id-ID')}</span>
+                <button class="btn-hapus" onclick="hapusItem(${index})">🗑️</button>
+            </div>
+        `;
+        isiKeranjangList.appendChild(div);
+    });
+    const rowbungkus = document.getElementById('row-biaya-bungkus');
+
+    if(metodepemesanan === 'Take Away') {
+        biayatambahan = 2000;
+        if(rowbungkus) rowbungkus.style.display = 'flex';
+    } else {
+        biayatambahan = 0;
+        if(rowbungkus) rowbungkus.style.display = 'none';
+    }
+
+    const totalakhir = totalharga + biayatambahan;
+
+    subtotalAngka.innerText = `Rp ${totalharga.toLocaleString('id-ID')}`;
+    totalAkhirAngka.innerText = `Rp ${totalakhir.toLocaleString('id-ID')}`;
+}
+
+// Fungsi Tambah/Kurang di dalam keranjang
+window.ubahJumlahKeranjang = function(index, delta) {
+    if (daftarBelanja[index].jumlah + delta > 0) {
+        daftarBelanja[index].jumlah += delta;
+        
+        // Update catatan global
+        jumlahitem += delta;
+        totalharga += (daftarBelanja[index].harga * delta);
+        
+        // Update bar bawah & tampilan keranjang
+        barJumlahBarang.innerText = `${jumlahitem} BARANG`;
+        barTotalHarga.innerText = `Rp ${totalharga.toLocaleString('id-ID')}`;
+        updateTampilanKeranjang();
+    }
+};
