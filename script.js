@@ -5,6 +5,7 @@ let daftarBelanja = []; // Ini adalah 'kantong' untuk menyimpan detail barang
 let jumlahitem = 0;
 let biayatambahan = 0;
 let metodepemesanan = 'Dine In';
+let metodepembayaran = 'Cash';
 
 const modalProduk = document.getElementById('modal-produk');
 const tutupModalProduk = document.querySelector('.tutup-modal-produk');
@@ -79,11 +80,9 @@ btnMasukKeranjang.addEventListener('click', function() {
         daftarBelanja.push({ nama: namaProduk, harga: harga, jumlah: jumlah, gambar: gambar });
     }
 
-    // Hitung total catatan utama
     jumlahitem += jumlah;
     totalharga += (harga * jumlah);
 
-    // Update tampilan bar bawah
     barJumlahBarang.innerText = `${jumlahitem} BARANG`;
     barTotalHarga.innerText = `Rp ${totalharga.toLocaleString('id-ID')}`;
     barKeranjangBawah.classList.add('bar-bawah-tampil');
@@ -223,29 +222,23 @@ const jumlahItemAtas = document.getElementById('jumlah-item-atas');
 const subtotalAngka = document.getElementById('subtotal-angka');
 const totalAkhirAngka = document.getElementById('total-akhir-angka');
 
-// 1. Fungsi untuk MEMBUKA keranjang saat Bar Hijau diklik
 barKeranjangBawah.addEventListener('click', function() {
     modalKeranjang.style.display = 'flex';
-    updateTampilanKeranjang(); // Refresh isi list setiap kali dibuka
+    updateTampilanKeranjang(); 
 });
 
-// 2. Fungsi untuk MENUTUP keranjang saat tombol panah diklik
 btnKembali.addEventListener('click', function() {
     modalKeranjang.style.display = 'none';
 });
 
-// 3. Fungsi untuk mengupdate angka-angka di dalam keranjang
 function updateTampilanKeranjang() {
-    // Update tulisan jumlah barang di bagian atas
+    
     jumlahItemAtas.innerText = `${jumlahitem} BARANG`;
     
-    // Update angka subtotal dan total (mengambil dari buku catatan 'totalharga')
     const hargaFormatted = `Rp ${totalharga.toLocaleString('id-ID')}`;
     subtotalAngka.innerText = hargaFormatted;
     totalAkhirAngka.innerText = hargaFormatted;
 
-    // Catatan: Untuk Fase 3.1 nanti, kita akan buat fungsi 
-    // agar list itemnya muncul satu per satu sesuai barang yang diklik.
 }
 
 function updateTampilanKeranjang() {
@@ -294,11 +287,9 @@ window.ubahJumlahKeranjang = function(index, delta) {
     if (daftarBelanja[index].jumlah + delta > 0) {
         daftarBelanja[index].jumlah += delta;
         
-        // Update catatan global
         jumlahitem += delta;
         totalharga += (daftarBelanja[index].harga * delta);
         
-        // Update bar bawah & tampilan keranjang
         barJumlahBarang.innerText = `${jumlahitem} BARANG`;
         barTotalHarga.innerText = `Rp ${totalharga.toLocaleString('id-ID')}`;
         updateTampilanKeranjang();
@@ -311,9 +302,8 @@ window.hapusItem = function(index) {
     jumlahitem -= item.jumlah;
     totalharga -= (item.harga * item.jumlah);
     
-    daftarBelanja.splice(index, 1); // Hapus dari daftar
+    daftarBelanja.splice(index, 1); 
     
-    // Jika keranjang kosong, sembunyikan bar bawah & tutup modal
     if (daftarBelanja.length === 0) {
         barKeranjangBawah.classList.remove('bar-bawah-tampil');
         modalKeranjang.style.display = 'none';
@@ -326,9 +316,9 @@ window.hapusItem = function(index) {
 
 //--- LOGIKA TOGGLE TAKE AWAY ---
 document.addEventListener('click', function(e) {
-    const target = e.target.closest('.tombol-opsi');
+    const target = e.target.closest('.container-opsi-metode .tombol-opsi');
     if (target) {
-        const semuaOpsi = document.querySelectorAll('.tombol-opsi');
+        const semuaOpsi = document.querySelectorAll('.container-opsi-metode .tombol-opsi');
         semuaOpsi.forEach(btn => btn.classList.remove('aktif'));
         target.classList.add('aktif');
 
@@ -346,4 +336,15 @@ document.addEventListener('click', function(e) {
 
         updateTampilanKeranjang();
     } 
+});
+
+// --- LOGIKA PILIHAN PEMBAYARAN ---
+document.querySelectorAll('input[name="metode-bayar"]').forEach(input => {
+    input.addEventListener('click', function() {
+    
+    if (this.checked) {
+        metodepembayaran = this.id === 'btn-bayar-Qris' ? 'Qris' : 'Cash';
+        console.log("Metode pembayaran dipilih:", metodepembayaran);
+    }
+});
 });
