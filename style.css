@@ -629,3 +629,63 @@ html {
     cursor: pointer; 
     font-size: 1.2rem; 
 }
+
+/* Bagian Bawah */
+.footer-keranjang {
+    padding: 20px;
+    background: white;
+    border-top: 1px solid #eee;
+}
+
+.btn-checkout {
+    width: 100%;
+    background: #0a4b0a;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-promo {
+    width: 100%;
+    background: none;
+    border: 1px solid #0a4b0a;
+    color: #0a4b0a;
+    padding: 8px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.input-catatan {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+.ringkasan-bayar {
+    margin-top: 15px;
+}
+
+.baris-bayar {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.total-akhir {
+    font-weight: bold;
+    color: #0a4b0a;
+    font-size: 1.1rem;
+    border-top: 1px solid #eee;
+    padding-top: 5px;
+}
