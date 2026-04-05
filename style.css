@@ -792,3 +792,58 @@ html {
     color: #0a4b0a;
     font-weight: bold;
 }
+
+/* Overlay latar belakang hitam transparan */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: none; /* Sembunyi di awal */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* Kotak Struk */
+.konten-struk {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    width: 85%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.detail-final {
+    text-align: left;
+    margin: 15px 0;
+    font-size: 0.9em;
+}
+
+.grup-tombol-struk {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-batal {
+    flex: 1; 
+    padding: 12px; 
+    border: none; 
+    border-radius: 10px; 
+    background: #eee;
+}
+
+.btn-konfirmasi {
+    flex: 2; 
+    padding: 12px; 
+    border: none; 
+    border-radius: 10px; 
+    background: #0a4b0a; 
+    color: white; 
+    font-weight: bold;
+}
+
+#modal-struk{
+    z-index: 9999;
+}
