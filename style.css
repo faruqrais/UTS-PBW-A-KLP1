@@ -385,3 +385,116 @@ html {
 .btn-pesan-sekarang:hover {
     background-color: #ff1493;
 }
+
+
+/* =========================================
+          POP-UP & BAR KERANJANG
+   ========================================= */
+
+/* --- 1. Overlay Layar Gelap --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 10000;
+    display: none; /* Diatur oleh JS */
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- 2. Kotak Putih Pop-up Detail --- */
+.modal-kotak {
+    background-color: #ffffff;
+    width: 90%;
+    max-width: 380px;
+    border-radius: 25px;
+    padding: 45px 25px 30px 25px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    animation: popMasuk 0.3s ease-out;
+}
+
+@keyframes popMasuk {
+    from { 
+        transform: scale(0.8); 
+        opacity: 0; }
+    to { 
+        transform: scale(1); opacity: 1; }
+}
+
+/* Tombol X Tutup */
+.tutup-modal-produk {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #0a4b0a;
+    color: white !important;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+#modal-gambar {
+    width: 160px;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+#modal-nama {
+    color: #0a4b0a;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+/* --- 3. Pengatur Jumlah --- */
+.kontrol-angka {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    margin: 20px 0 30px 0;
+}
+
+.btn-bulat {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0a4b0a;
+}
+
+#btn-kurang { background-color: #ccc; }
+
+#angka-jumlah {
+    font-size: 1.4rem;
+    font-weight: bold;
+    min-width: 30px;
+}
+
+.btn-beli-utama {
+    width: 100%;
+    background-color: #0a4b0a;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 35px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
