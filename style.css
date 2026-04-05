@@ -732,3 +732,63 @@ html {
     font-size: 0.85rem;
     font-style: italic;
 }
+
+.pembayaran{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 20px;
+    background: #fff;
+    margin-top: 5px;
+}
+
+.pembayaran input[type="radio"] {
+    display: none;
+}
+
+.opsi-metode-bayar {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1; 
+}
+
+.bulat-radio {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    margin-right: 10px;
+    position: relative;
+    display: inline-block;
+}
+
+.bulat-radio::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: #0a4b0a;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0); 
+    transition: transform 0.2s ease;
+}
+
+.pembayaran input:checked + .bulat-radio {
+    border-color: #0a4b0a; 
+}
+
+.pembayaran input:checked + .bulat-radio::after {
+    transform: translate(-50%, -50%) scale(1); 
+}
+
+.pembayaran input:checked ~ .teks-pembayaran {
+    color: #0a4b0a;
+    font-weight: bold;
+}
