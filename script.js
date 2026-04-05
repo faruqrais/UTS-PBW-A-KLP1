@@ -338,7 +338,7 @@ document.addEventListener('click', function(e) {
     } 
 });
 
-// --- LOGIKA PILIHAN PEMBAYARAN ---
+// --- BAGIAN CHECKOUT ---
 document.querySelectorAll('input[name="metode-bayar"]').forEach(input => {
     input.addEventListener('click', function() {
     
@@ -348,3 +348,41 @@ document.querySelectorAll('input[name="metode-bayar"]').forEach(input => {
     }
 });
 });
+
+function bukaModalCheckout() {
+    const kontainerItemStruk = document.getElementById('daftar-item-struk');
+    const inputCatatan = document.querySelector('.input-catatan')?.value || "-";
+
+    kontainerItemStruk.innerHTML = ""; 
+    
+    // 1. Tampilkan barang-barang
+    daftarBelanja.forEach(item => {
+        kontainerItemStruk.innerHTML += `
+            <p style="display: flex; justify-content: space-between; margin: 5px 0;">
+                <span>${item.nama} x${item.jumlah}</span>
+                <span>Rp ${(item.harga * item.jumlah).toLocaleString('id-ID')}</span>
+            </p>`;
+    });
+
+    // TAMBAH BIAYA TAKE AWAY
+    if (metodepemesanan === 'Take Away') {
+        kontainerItemStruk.innerHTML += `
+            <p style="display: flex; justify-content: space-between; color: #e67e22; font-style: italic; border-top: 1px dashed #ddd; padding-top: 5px;">
+                <span>Biaya Bungkus</span>
+                <span>Rp 2.000</span>
+            </p>`;
+    }
+
+    document.getElementById('struk-metode-pesan').innerText = metodepemesanan;
+    document.getElementById('struk-metode-bayar').innerText = metodepembayaran;
+    document.getElementById('struk-catatan').innerText = inputCatatan;
+    
+    const totalFinal = totalharga + biayatambahan;
+    document.getElementById('struk-total-harga').innerText = `Rp ${totalFinal.toLocaleString('id-ID')}`;
+
+    document.getElementById('modal-struk').style.display = 'flex';
+}
+
+function tutupModal() {
+    document.getElementById('modal-struk').style.display = 'none';
+}
