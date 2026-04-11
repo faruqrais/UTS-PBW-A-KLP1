@@ -1,74 +1,83 @@
-/* --- GAYA DASAR --- */
+/* =========================================
+   GAYA DASAR
+   ========================================= */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: rgba(255, 182, 193, 0.6); 
-    /* Mengaktifkan shadow untuk semua teks di body */
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.2); 
+    background-color: rgba(255, 182, 193, 0.6);
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
 }
 
-/* --- NAVBAR --- */
+/* =========================================
+   NAVBAR
+   ========================================= */
 .navbar {
-    background-color: rgba(216, 139, 149, 0.6); 
-    padding: 30px 60px;
+    background-color: rgba(216, 139, 149, 0.8);
+    padding: 15px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 20px 20px 0;
-    text-shadow: none;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    margin: 15px;
+    border-radius: 40px;
     position: sticky;
-    top: 20px;
+    top: 10px;
     z-index: 1000;
-    border-radius: 55px;
 }
 
 .navbar h1 {
     margin: 0;
-    padding-left: 45px;
     color: #fff;
-    font-size: 35px;
+    font-size: 22px;
+}
+
+.navbar div {
+    display: flex;
+    gap: 20px;
 }
 
 .navbar a {
     color: #fff;
     text-decoration: none;
-    margin-left: 35px;
-    font-weight: bold;
-    font-size: 25px;
+    font-weight: 600;
+    font-size: 15px;
 }
 
 .navbar a:hover {
     color: #ab1f7d;
 }
 
-/* --- HERO SECTION --- */
+/* =========================================
+   HERO SECTION
+   ========================================= */
 .hero {
     text-align: center;
-    padding: 400px 20px 760px 20px;
+    padding: 120px 20px;
     background-color: #fabfb9;
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('foto-hero.png');
     background-size: cover;
     background-position: center;
-    min-height: 10vh;
+    min-height: 100vh;
 }
+
 .hero h1 {
-    font-size: 5em;
+    font-size: 2.5em;
     margin-bottom: 20px;
     color: #f59dc9;
 }
 
 .deskripsi-hero {
-    font-size: 2.5em;
+    font-size: 1.2em;
     margin-bottom: 30px;
     font-weight: 400;
     color: #f59dc9;
 }
 
+/* =========================================
+   TOMBOL UTAMA
+   ========================================= */
 .btn-utama {
-    background-color: #ff0080; 
+    background-color: #ff0080;
     color: rgb(255, 255, 255);
     padding: 12px 30px;
     text-decoration: none;
@@ -79,15 +88,16 @@ body {
     border: none;
     cursor: pointer;
     transition: 0.3s;
-    /* Opsional: mematikan shadow di dalam tombol agar lebih rapi */
-    text-shadow: none; 
+    text-shadow: none;
 }
 
 .btn-utama:hover {
     background-color: #ff1493;
 }
 
-/* --- MENU SECTION --- */
+/* =========================================
+   MENU SECTION
+   ========================================= */
 .menu-container {
     padding: 50px 20px;
     max-width: 100%;
@@ -113,7 +123,9 @@ body {
     color: #d34d90;
 }
 
-
+/* =========================================
+   NAV MENU (FILTER KATEGORI)
+   ========================================= */
 .nav-menu {
     display: flex;
     position: relative;
@@ -122,31 +134,38 @@ body {
     white-space: nowrap;
     padding: 20px 50px;
     border-radius: 55px;
-    margin: 30px 1000px;
+    margin: 30px auto 40px auto;
+    max-width: 800px;
     gap: 15px;
-    margin-bottom: 40px;
     background-color: rgba(168, 28, 49, 0.6);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+}
 
+.slider-aktif {
+    position: absolute;
+    background-color: rgba(255, 182, 193, 0.6);
+    border-radius: 25px;
+    z-index: 1;
+    transition: all 0.3s ease;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
 }
 
 .nav-menu-item {
-    padding: 10px 35px;
-    border-radius: 25px;
-    color: rgb(211, 220, 220);
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #eee;
     text-decoration: none;
-    text-transform: capitalize;
-    transition: all 0.3s ease;
-    font-size: 30px;
-    font-weight: 550;
-    z-index: 2;
-    position: relative;
+    transition: 0.3s;
 }
-.nav-menu-item:hover {
-    color: #fff;
-}
+
 .nav-menu-item.aktif {
+    background-color: rgba(255, 182, 193, 0.6);
     color: #fff;
 }
 
@@ -155,50 +174,26 @@ body {
     color: #fff;
 }
 
-.slider-aktif {
-    position: absolute;
-    background-color: rgba(255, 182, 193, 0.6);
-    border-radius: 25px;
-    z-index: 1; 
-    transition: all 0.3s ease;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 0;
-}  
-
+/* =========================================
+   GRID KARTU MENU
+   ========================================= */
 .grid {
     display: flex;
-    gap: 25px;
     flex-wrap: wrap;
-    justify-content: left;
-    padding-bottom: 20px;
-    scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;
-    padding-top: 55px;
-    /* -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    mask-image: linear-gradient(to right, transparent, black 10% black 90% transparent); */
-    padding-left: 90px;
-    padding-right: 90px;
-    gap: 70px 40px;
-}
-
-.grid::-webkit-scrollbar {
-    display: none;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px 20px;
 }
 
 .card {
     background: white;
     border-radius: 15px;
-    width: 350px;
-    padding: 0 0 30px 0;
+    width: 250px;
+    padding-bottom: 20px;
     text-align: center;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    transition: transform 0.3s;
     overflow: hidden;
-    flex: 0 0 auto;
-    scroll-snap-align: center;
-    transition: transform 0.4s, ease, filter 0.4s ease, opacity 0.4s ease;
+    transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
     filter: blur(4px);
     opacity: 0.6;
 }
@@ -210,33 +205,24 @@ body {
 }
 
 .card:hover {
-    transform: translateY(-45px);
+    transform: translateY(-10px);
 }
 
 .card .img-placeholder {
     width: 100%;
-    height: 400px;
-    margin: 0;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 200px;
     overflow: hidden;
-    border-radius: 10px;
-    background-color: #f0f0f0;
 }
 
 .card .img-placeholder img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
 }
 
-.btn-tambah{
-    margin-top: auto;
-    padding: 12px 25px;
+.btn-tambah {
     margin-top: 20px;
+    padding: 12px 25px;
 }
 
 .harga {
@@ -250,18 +236,25 @@ html {
     scroll-behavior: smooth;
 }
 
+/* =========================================
+   MODAL OVERLAY (satu definisi, tidak duplikat)
+   ========================================= */
 .modal-overlay {
-    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 10000;
+    display: none;         /* diatur oleh JS */
     justify-content: center;
     align-items: center;
 }
+
+/* =========================================
+   MODAL LOGIN
+   ========================================= */
 .modal-content {
     background-color: #fff;
     padding: 30px;
@@ -288,124 +281,17 @@ html {
 }
 
 @keyframes muncul {
-    from { transform: scale(0.8); opacity: 0;}
-    to{ transform: scale(1); opacity: 1;}
+    from { transform: scale(0.8); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
 }
 
-.register{
+.register {
     display: none;
 }
-
-.keranjang-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 350px;
-    background-color: rgba(0, 0, 0, 0.6);
-    border-radius: 15px;
-    box-shadow: 15px;
-    display: none;
-    flex-direction: column;
-    z-index: 9999;
-    overflow: hidden;
-    text-shadow: none;
-}
-
-.keranjang-header {
-    background-color: #ff69b4;
-    color: #fff;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    font-size: 1.2em;
-    font-weight: bold;
-    align-items: center;
-}
-
-.keranjang-header h3 {
-    margin: 0;
-    font-size: 1.2em;
-    color: #fff;
-}
-
-#tutup-keranjang {
-    font-size: 24px;
-    color: #fff;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-#daftar-pesanan {
-    padding: 20px;
-    max-height: 250px;
-    overflow-y: auto;
-    color: #fff;
-}
-
-.item-pesanan {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    font-size: 1em;
-
-}
-
-.keranjang-footer {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    font-size: 1em;
-    border-bottom: 1px dashed rgba(255,255,255,0.4);
-    padding-bottom: 10px;
-}
-
-.total-harga {
-    color: #fff;
-    font-size: 1.2em;
-    font-weight: bold;
-    margin-bottom: 15px;
-    text-align: right;
-}
-
-.btn-pesan-sekarang {
-    width: 100%;
-    background-color: #ffffff;
-    color: #ff0080;
-    padding: 10px 0;    
-    border: none;
-    border-radius: 25px;
-    font-size: 1.1em;
-    font-weight: bold;
-    cursor: pointer;
-    text-transform: capitalize;
-    transition: 0.3s;
-    margin-top: 10px;
-}
-
-.btn-pesan-sekarang:hover {
-    background-color: #ff1493;
-}
-
 
 /* =========================================
-          POP-UP & BAR KERANJANG
+   MODAL DETAIL PRODUK
    ========================================= */
-
-/* --- 1. Overlay Layar Gelap --- */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 10000;
-    display: none; /* Diatur oleh JS */
-    justify-content: center;
-    align-items: center;
-}
-
-/* --- 2. Kotak Putih Pop-up Detail --- */
 .modal-kotak {
     background-color: #ffffff;
     width: 90%;
@@ -419,14 +305,10 @@ html {
 }
 
 @keyframes popMasuk {
-    from { 
-        transform: scale(0.8); 
-        opacity: 0; }
-    to { 
-        transform: scale(1); opacity: 1; }
+    from { transform: scale(0.8); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
 }
 
-/* Tombol X Tutup */
 .tutup-modal-produk {
     position: absolute;
     top: 15px;
@@ -456,7 +338,9 @@ html {
     margin-bottom: 20px;
 }
 
-/* --- 3. Pengatur Jumlah --- */
+/* =========================================
+   PENGATUR JUMLAH (POP-UP PRODUK)
+   ========================================= */
 .kontrol-angka {
     display: flex;
     justify-content: center;
@@ -499,10 +383,12 @@ html {
     cursor: pointer;
 }
 
-/* --- 4. Bar Keranjang Hijau (Pil) --- */
+/* =========================================
+   BAR KERANJANG BAWAH (PIL HIJAU)
+   ========================================= */
 #bar-keranjang-bawah {
     position: fixed;
-    bottom: -100px;
+    bottom: -100px;           
     left: 50%;
     transform: translateX(-50%);
     width: 95%;
@@ -515,7 +401,7 @@ html {
     justify-content: space-between;
     align-items: center;
     z-index: 9999;
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
 }
 
@@ -523,44 +409,52 @@ html {
     bottom: 70px;
 }
 
-.info-kiri { 
-    display: flex; 
-    align-items: center; 
-    gap: 15px; 
-    font-weight: bold; }
+.info-kiri {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: bold;
+}
 
-#bar-jumlah-barang{
+#bar-jumlah-barang {
     font-size: 27px;
     font-weight: bold;
     color: #ffffff;
 }
 
-.info-kanan { 
+.info-kanan {
     text-align: right;
- }
+}
 
-.label-total { 
-    font-size: 17px; 
-    opacity: 0.8; 
-    display: block; }
+.label-total {
+    font-size: 17px;
+    opacity: 0.8;
+    display: block;
+}
 
-#bar-total-harga { 
-    font-weight: bold; 
+#bar-total-harga {
+    font-weight: bold;
     font-size: 25px;
- }
+}
 
 .ikon-tas {
     font-size: 35px;
 }
 
-/* --- FASE 3: KERANJANG BESAR --- */
+/* =========================================
+   MODAL KERANJANG BESAR
+   ========================================= */
+#modal-keranjang {
+    align-items: flex-end;
+    padding-bottom: 100;
+}
+
 .modal-kotak-keranjang {
     background-color: #f8f8f8;
     width: 95%;
     max-width: 500px;
-    height: auto; 
-    max-height: 85vh;
-    border-radius: 30px;
+    height: 100vh;
+    border-radius: 30px 30px 0 0;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -570,10 +464,11 @@ html {
 
 @keyframes slideUp {
     from { transform: translateY(100%); }
-    to { transform: translateY(0); }
+    to   { transform: translateY(0); }
 }
 
 .header-keranjang {
+    flex-shrink: 0;
     padding: 20px;
     background: white;
     display: flex;
@@ -582,19 +477,20 @@ html {
     border-bottom: 1px solid #eee;
 }
 
-.header-keranjang h2 { 
-    color: #0a4b0a; 
-    font-size: 1.2rem; 
-    letter-spacing: 2px; }
-
-#isi-keranjang-list {
-    flex: 1; /* Mengambil sisa ruang tengah */
-    overflow-y: auto; /* Bisa di-scroll kalau belanjaan banyak */
-    padding: 15px;
-    min-height: 100px;
+.header-keranjang h2 {
+    color: #0a4b0a;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    margin: 0;
 }
 
-/* Item di dalam list */
+#isi-keranjang-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    min-height: 0;
+}
+
 .item-keranjang {
     background: white;
     border-radius: 15px;
@@ -605,73 +501,110 @@ html {
     gap: 15px;
 }
 
-.img-item { 
-    width: 60px; 
-    height: 60px; 
-    object-fit: cover; 
-    border-radius: 10px; 
+.img-item {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 10px;
+    flex-shrink: 0;
 }
 
-.detail-item h4 { 
-    color: #0a4b0a; 
-    margin-bottom: 5px; 
+.detail-item h4 {
+    color: #0a4b0a;
+    margin: 0 0 5px 0;
 }
 
-.harga-item-kanan { 
-    margin-left: auto; 
-    text-align: right; 
+.kontrol-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
 }
 
-.btn-hapus { 
-    border: none; 
-    background: none; 
-    color: red; 
-    cursor: pointer; 
-    font-size: 1.2rem; 
+.btn-kecil {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Bagian Bawah */
+.harga-item-kanan {
+    margin-left: auto;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.btn-hapus {
+    border: none;
+    background: none;
+    color: red;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.container-opsi-metode {
+    flex-shrink: 0;
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    background: #fff;
+    border-top: 1px solid #eee;
+}
+
+.tombol-opsi {
+    flex: 1;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.ikon-opsi {
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+}
+
+.tombol-opsi.aktif {
+    border-color: #0a4b0a;
+    background: #e7f3e7;
+    color: #0a4b0a;
+}
+
 .footer-keranjang {
-    padding: 20px;
+    flex-shrink: 0;
+    padding: 12px 15px;
     background: white;
     border-top: 1px solid #eee;
 }
 
-.btn-checkout {
-    width: 100%;
-    background: #0a4b0a;
-    color: white;
-    border: none;
-    padding: 15px;
-    border-radius: 30px;
-    font-weight: bold;
-    font-size: 1.1rem;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.btn-promo {
-    width: 100%;
-    background: none;
-    border: 1px solid #0a4b0a;
-    color: #0a4b0a;
-    padding: 8px;
-    border-radius: 20px;
-    margin-bottom: 10px;
-    cursor: pointer;
-}
-
 .input-catatan {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 15px;
-    margin-top: 10px;
-    font-size: 0.9rem;
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+    resize: none;
+    font-family: inherit;
 }
 
 .ringkasan-bayar {
-    margin-top: 15px;
+    margin-top: 8px;
 }
 
 .baris-bayar {
@@ -679,7 +612,7 @@ html {
     justify-content: space-between;
     font-size: 0.9rem;
     color: #555;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
 }
 
 .total-akhir {
@@ -690,160 +623,86 @@ html {
     padding-top: 5px;
 }
 
-/* ---OPSI METODE --- */
-.container-opsi-metode {
-    display: flex;
-    gap: 10px;
-    padding: 10px 20px;
-    background: #fff;
-    border-bottom: 1px solid #eee;
-}
-
-.tombol-opsi {
-    flex: 1; /* Agar kedua tombol punya lebar yang sama rata */
-    padding: 10px;
-    border: 2px solid #eee;
-    border-radius: 12px;
-    background: #f9f9f9;
-    cursor: pointer;
-    font-weight: bold;
-    color: #888;
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 0.8rem;
-}
-
-.ikon-opsi {
-    font-size: 1.2rem;
-    margin-bottom: 4px;
-}
-
-/* KELAS AKTIF (SAAT DIKLIK) */
-.tombol-opsi.aktif {
-    border-color: #0a4b0a;
-    background: #e7f3e7;
-    color: #0a4b0a;
-}
-
-#row-biaya-bungkus{
+#row-biaya-bungkus {
     color: #e67e22;
     font-size: 0.85rem;
     font-style: italic;
 }
 
-.pembayaran{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px 20px;
-    background: #fff;
-    margin-top: 5px;
-}
-
-.pembayaran input[type="radio"] {
-    display: none;
-}
-
-.opsi-metode-bayar {
-    display: flex;
-    align-items: center;
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    flex: 1; 
-}
-
-.bulat-radio {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #ccc;
-    border-radius: 50%;
-    margin-right: 10px;
-    position: relative;
-    display: inline-block;
-}
-
-.bulat-radio::after {
-    content: "";
-    width: 10px;
-    height: 10px;
-    background-color: #0a4b0a;
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0); 
-    transition: transform 0.2s ease;
-}
-
-.pembayaran input:checked + .bulat-radio {
-    border-color: #0a4b0a; 
-}
-
-.pembayaran input:checked + .bulat-radio::after {
-    transform: translate(-50%, -50%) scale(1); 
-}
-
-.pembayaran input:checked ~ .teks-pembayaran {
+.btn-promo {
+    width: 100%;
+    background: none;
+    border: 1px solid #0a4b0a;
     color: #0a4b0a;
-    font-weight: bold;
+    padding: 8px;
+    border-radius: 20px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    box-sizing: border-box;
 }
 
-/* Overlay latar belakang hitam transparan */
-.modal-overlay {
+.btn-checkout {
+    width: 100%;
+    background: #0a4b0a;
+    color: white;
+    border: none;
+    padding: 13px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.popup-sukses {
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: none; /* Sembunyi di awal */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
+    z-index: 99999;
+    animation: fadeIn 0.3s ease;
 }
 
-/* Kotak Struk */
-.konten-struk {
+.isi-popup {
     background: white;
-    padding: 25px;
+    padding: 30px;
     border-radius: 20px;
-    width: 85%;
-    max-width: 400px;
     text-align: center;
+    animation: popUp 0.3s ease;
 }
 
-.detail-final {
-    text-align: left;
-    margin: 15px 0;
-    font-size: 0.9em;
+.isi-popup h2 {
+    color: #0a4b0a;
 }
 
-.grup-tombol-struk {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
+.isi-popup button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    background: #0a4b0a;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
 }
 
-.btn-batal {
-    flex: 1; 
-    padding: 12px; 
-    border: none; 
-    border-radius: 10px; 
-    background: #eee;
+@keyframes popUp {
+    from {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
-.btn-konfirmasi {
-    flex: 2; 
-    padding: 12px; 
-    border: none; 
-    border-radius: 10px; 
-    background: #0a4b0a; 
-    color: white; 
-    font-weight: bold;
-}
-
-#modal-struk{
-    z-index: 9999;
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
 }
