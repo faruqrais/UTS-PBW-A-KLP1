@@ -407,18 +407,34 @@ function tampilkanPopupSukses() {
     document.body.appendChild(popup);
 }
 
+function mulaiStatusPesanan() {
+    const box = document.getElementById('status-pesanan');
+    const text = document.getElementById('status-text');
+
+    box.style.display = 'block';
+
+    text.innerText = "⏳ Pesanan sedang diproses...";
+
+    setTimeout(() => {
+        text.innerText = "👨‍🍳 Pesanan sedang dimasak di dapur...";
+    }, 3000);
+
+    setTimeout(() => {
+        text.innerText = "🚚 Pesanan siap diambil!";
+    }, 6000);
+}
+
 
 // ================= RESET =================
 window.tutupPopup = function () {
     document.querySelector('.popup-sukses').remove();
 
+    mulaiStatusPesanan(); 
+
     daftarBelanja = [];
     jumlahitem = 0;
     totalharga = 0;
-
-    if (typeof diskonAktif !== 'undefined') {
-        diskonAktif = 0;
-    }
+    diskonAktif = 0;
 
     barKeranjangBawah.classList.remove('bar-bawah-tampil');
     modalKeranjang.style.display = 'none';
@@ -428,7 +444,6 @@ window.tutupPopup = function () {
 
     updateTampilanKeranjang();
 
-    // balikin tombol
     btnCheckout.innerText = "CHECKOUT";
     btnCheckout.style.background = "#0a4b0a";
 };
