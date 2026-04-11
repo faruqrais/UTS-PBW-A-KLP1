@@ -5,7 +5,7 @@ let daftarBelanja = []; // Ini adalah 'kantong' untuk menyimpan detail barang
 let jumlahitem = 0;
 let biayatambahan = 0;
 let metodepemesanan = 'Dine In';
-let metodepembayaran = 'Cash';
+let diskonAktif = 0;
 
 const modalProduk = document.getElementById('modal-produk');
 const tutupModalProduk = document.querySelector('.tutup-modal-produk');
@@ -80,9 +80,11 @@ btnMasukKeranjang.addEventListener('click', function() {
         daftarBelanja.push({ nama: namaProduk, harga: harga, jumlah: jumlah, gambar: gambar });
     }
 
+    // Hitung total catatan utama
     jumlahitem += jumlah;
     totalharga += (harga * jumlah);
 
+    // Update tampilan bar bawah
     barJumlahBarang.innerText = `${jumlahitem} BARANG`;
     barTotalHarga.innerText = `Rp ${totalharga.toLocaleString('id-ID')}`;
     barKeranjangBawah.classList.add('bar-bawah-tampil');
@@ -116,7 +118,7 @@ cards.forEach(card => {
 const btnLogin = document.getElementById('btn-login');
 const modalLogin = document.getElementById('modal-login');
 const btnTutup = document.getElementById('btn-tutup');
-const tempatFrom = document.getElementById('tempat-form');
+const tempatForm = document.getElementById('tempat-form');
 
 btnLogin.addEventListener('click', function(e) {
     e.preventDefault();
@@ -127,11 +129,11 @@ btnLogin.addEventListener('click', function(e) {
         return response.text();
     })
     .then(data => {
-        tempatFrom.innerHTML = data;
+        tempatForm.innerHTML = data;
         aturTombolTukar();
     })
     .catch(error => {
-        tempatFrom.innerHTML = '<p style="text-align: center;"> Gagal memuat form login</p>';
+        tempatForm.innerHTML = '<p style="text-align: center;"> Gagal memuat form login</p>';
         
     });
 
@@ -222,23 +224,29 @@ const jumlahItemAtas = document.getElementById('jumlah-item-atas');
 const subtotalAngka = document.getElementById('subtotal-angka');
 const totalAkhirAngka = document.getElementById('total-akhir-angka');
 
+// 1. Fungsi untuk MEMBUKA keranjang saat Bar Hijau diklik
 barKeranjangBawah.addEventListener('click', function() {
     modalKeranjang.style.display = 'flex';
-    updateTampilanKeranjang(); 
+    updateTampilanKeranjang(); // Refresh isi list setiap kali dibuka
 });
 
+// 2. Fungsi untuk MENUTUP keranjang saat tombol panah diklik
 btnKembali.addEventListener('click', function() {
     modalKeranjang.style.display = 'none';
 });
 
+// 3. Fungsi untuk mengupdate angka-angka di dalam keranjang
 function updateTampilanKeranjang() {
-    
+    // Update tulisan jumlah barang di bagian atas
     jumlahItemAtas.innerText = `${jumlahitem} BARANG`;
     
+    // Update angka subtotal dan total (mengambil dari buku catatan 'totalharga')
     const hargaFormatted = `Rp ${totalharga.toLocaleString('id-ID')}`;
     subtotalAngka.innerText = hargaFormatted;
     totalAkhirAngka.innerText = hargaFormatted;
 
+    // Catatan: Untuk Fase 3.1 nanti, kita akan buat fungsi 
+    // agar list itemnya muncul satu per satu sesuai barang yang diklik.
 }
 
 function updateTampilanKeranjang() {
@@ -276,7 +284,7 @@ function updateTampilanKeranjang() {
         if(rowbungkus) rowbungkus.style.display = 'none';
     }
 
-    const totalakhir = totalharga + biayatambahan;
+    const totalakhir = totalharga + biayatambahan - diskonAktif;
 
     subtotalAngka.innerText = `Rp ${totalharga.toLocaleString('id-ID')}`;
     totalAkhirAngka.innerText = `Rp ${totalakhir.toLocaleString('id-ID')}`;
@@ -287,9 +295,11 @@ window.ubahJumlahKeranjang = function(index, delta) {
     if (daftarBelanja[index].jumlah + delta > 0) {
         daftarBelanja[index].jumlah += delta;
         
+        // Update catatan global
         jumlahitem += delta;
         totalharga += (daftarBelanja[index].harga * delta);
         
+        // Update bar bawah & tampilan keranjang
         barJumlahBarang.innerText = `${jumlahitem} BARANG`;
         barTotalHarga.innerText = `Rp ${totalharga.toLocaleString('id-ID')}`;
         updateTampilanKeranjang();
@@ -302,8 +312,9 @@ window.hapusItem = function(index) {
     jumlahitem -= item.jumlah;
     totalharga -= (item.harga * item.jumlah);
     
-    daftarBelanja.splice(index, 1); 
+    daftarBelanja.splice(index, 1); // Hapus dari daftar
     
+    // Jika keranjang kosong, sembunyikan bar bawah & tutup modal
     if (daftarBelanja.length === 0) {
         barKeranjangBawah.classList.remove('bar-bawah-tampil');
         modalKeranjang.style.display = 'none';
@@ -316,9 +327,9 @@ window.hapusItem = function(index) {
 
 //--- LOGIKA TOGGLE TAKE AWAY ---
 document.addEventListener('click', function(e) {
-    const target = e.target.closest('.container-opsi-metode .tombol-opsi');
+    const target = e.target.closest('.tombol-opsi');
     if (target) {
-        const semuaOpsi = document.querySelectorAll('.container-opsi-metode .tombol-opsi');
+        const semuaOpsi = document.querySelectorAll('.tombol-opsi');
         semuaOpsi.forEach(btn => btn.classList.remove('aktif'));
         target.classList.add('aktif');
 
@@ -338,51 +349,86 @@ document.addEventListener('click', function(e) {
     } 
 });
 
-// --- BAGIAN CHECKOUT ---
-document.querySelectorAll('input[name="metode-bayar"]').forEach(input => {
-    input.addEventListener('click', function() {
-    
-    if (this.checked) {
-        metodepembayaran = this.id === 'btn-bayar-Qris' ? 'Qris' : 'Cash';
-        console.log("Metode pembayaran dipilih:", metodepembayaran);
-    }
-});
-});
+// --- TOMBOL PROMO ---
+const btnPromo = document.querySelector('.btn-promo');
 
-function bukaModalCheckout() {
-    const kontainerItemStruk = document.getElementById('daftar-item-struk');
-    const inputCatatan = document.querySelector('.input-catatan')?.value || "-";
+if (btnPromo) {
+    btnPromo.addEventListener('click', function() {
+        const kode = prompt("Masukkan kode promo:");
 
-    kontainerItemStruk.innerHTML = ""; 
-    
-    // 1. Tampilkan barang-barang
-    daftarBelanja.forEach(item => {
-        kontainerItemStruk.innerHTML += `
-            <p style="display: flex; justify-content: space-between; margin: 5px 0;">
-                <span>${item.nama} x${item.jumlah}</span>
-                <span>Rp ${(item.harga * item.jumlah).toLocaleString('id-ID')}</span>
-            </p>`;
+        if (!kode) return;
+
+        if (kode.toLowerCase() === "diskon10") {
+            diskonAktif = totalharga * 0.1;
+
+            alert("Promo berhasil! Diskon 10% 🎉");
+        } else {
+            diskonAktif = 0;
+            alert("Kode promo tidak valid ❌");
+        }
+
+        updateTampilanKeranjang();
     });
+}
 
-    // TAMBAH BIAYA TAKE AWAY
-    if (metodepemesanan === 'Take Away') {
-        kontainerItemStruk.innerHTML += `
-            <p style="display: flex; justify-content: space-between; color: #e67e22; font-style: italic; border-top: 1px dashed #ddd; padding-top: 5px;">
-                <span>Biaya Bungkus</span>
-                <span>Rp 2.000</span>
-            </p>`;
+// ================= CHECKOUT =================
+const btnCheckout = document.querySelector('.btn-checkout');
+
+btnCheckout.addEventListener('click', function () {
+
+    if (daftarBelanja.length === 0) {
+        alert("Keranjang kosong 😅");
+        return;
     }
 
-    document.getElementById('struk-metode-pesan').innerText = metodepemesanan;
-    document.getElementById('struk-metode-bayar').innerText = metodepembayaran;
-    document.getElementById('struk-catatan').innerText = inputCatatan;
-    
-    const totalFinal = totalharga + biayatambahan;
-    document.getElementById('struk-total-harga').innerText = `Rp ${totalFinal.toLocaleString('id-ID')}`;
+    // animasi tombol
+    btnCheckout.innerText = "Memproses...";
+    btnCheckout.style.background = "#999";
 
-    document.getElementById('modal-struk').style.display = 'flex';
+    setTimeout(() => {
+        tampilkanPopupSukses();
+    }, 1000);
+});
+
+
+// ================= POPUP =================
+function tampilkanPopupSukses() {
+    const totalakhir = totalharga + biayatambahan - (typeof diskonAktif !== 'undefined' ? diskonAktif : 0);
+
+    const popup = document.createElement('div');
+    popup.className = 'popup-sukses';
+    popup.innerHTML = `
+        <div class="isi-popup">
+            <h2>✅ Pesanan Berhasil!</h2>
+            <p>Total: Rp ${totalakhir.toLocaleString('id-ID')}</p>
+            <button onclick="tutupPopup()">OK</button>
+        </div>
+    `;
+    document.body.appendChild(popup);
 }
 
-function tutupModal() {
-    document.getElementById('modal-struk').style.display = 'none';
-}
+
+// ================= RESET =================
+window.tutupPopup = function () {
+    document.querySelector('.popup-sukses').remove();
+
+    daftarBelanja = [];
+    jumlahitem = 0;
+    totalharga = 0;
+
+    if (typeof diskonAktif !== 'undefined') {
+        diskonAktif = 0;
+    }
+
+    barKeranjangBawah.classList.remove('bar-bawah-tampil');
+    modalKeranjang.style.display = 'none';
+
+    barJumlahBarang.innerText = "0 BARANG";
+    barTotalHarga.innerText = "Rp 0";
+
+    updateTampilanKeranjang();
+
+    // balikin tombol
+    btnCheckout.innerText = "CHECKOUT";
+    btnCheckout.style.background = "#0a4b0a";
+};
